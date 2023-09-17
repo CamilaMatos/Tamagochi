@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import Header from "../components/Header";
+import axios from 'axios';
 
 
 const style = StyleSheet.create({
@@ -58,12 +59,28 @@ const style = StyleSheet.create({
 const Login = ({navigation}: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
-    const onPress1 = () => {navigation.navigate('Home', {nome:{email}})};
-    const onPress2 = () => {navigation.navigate('Cadastrar')};
+    const onPress = () => {navigation.navigate('Cadastrar')};
 
     const onChangeInput = (value:string) => {
         setEmail(value);
     };
+    const onChangeInputSenha = (value:string) => {
+        setSenha(value);
+    };
+
+    const submit = async () => {
+        try {
+            const postToSubmit = {
+                email: email,
+                password: senha,
+            };
+            const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/login/', postToSubmit);
+            console.log(response);
+            navigation.navigate('Home', {email:{email}});
+        } catch(error) {
+            console.error(error)
+        }
+    }
 
     return (
         <SafeAreaView style={style.container}>
@@ -80,14 +97,14 @@ const Login = ({navigation}: any) => {
             <TextInput 
             style={style.input} 
             value={senha} 
-            onChangeText={onChangeInput}
+            onChangeText={onChangeInputSenha}
             placeholder="Senha"
             />
-            <TouchableOpacity  onPress={onPress2}>
+            <TouchableOpacity  onPress={onPress}>
                     <Text style={style.textLink}>Ainda não tem uma conta? clique aqui para se cadastrar</Text>
             </TouchableOpacity>
             <View style={style.botao}>
-                <TouchableOpacity  onPress={onPress1}>
+                <TouchableOpacity  onPress={submit}>
                     <Text style={style.textoBotao}>Entre</Text>
                 </TouchableOpacity>
             </View>

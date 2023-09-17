@@ -5,7 +5,7 @@ const style = StyleSheet.create({
   container: {
       width: 300,
       height: 300,
-      marginLeft: 45,
+      marginLeft: 20,
       resizeMode: 'center',
   },
 });

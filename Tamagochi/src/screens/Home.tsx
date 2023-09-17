@@ -14,12 +14,12 @@ const style = StyleSheet.create({
 
 
 const Home = ({route, navigation} : any) => {
-  const {nome} = route.params;
-  console.log(nome);
+  const {email} = route.params;
+  console.log(email);
   return (
     <SafeAreaView>
       <View style={style.container}>
-          <Text style={style.texto}>Bem-vindo(a) de volta {(nome.login)}</Text>
+          <Text style={style.texto}>Bem-vindo(a) de volta {(email.email)}</Text>
       </View>
     </SafeAreaView>
   );

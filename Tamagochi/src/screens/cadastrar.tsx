@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import axios from 'axios';
 
 
 const style = StyleSheet.create({
@@ -56,24 +57,38 @@ const style = StyleSheet.create({
     },
 });
 
+
+
 const Cadastrar = ({navigation}: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
     const [cSenha, setCSenha] = useState<string>();
     const onPress = () => {navigation.navigate('Login')};
+ 
+    const submit = async () => {
+        try {
+            const postToSubmit = {
+                email: email,
+                password: senha,
+            };
+            const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', postToSubmit);
+            console.log(response.data);
+            navigation.navigate('Login');
+        } catch(error) {
+            console.error(error)
+        }
+    }
 
     const onChangeInputEmail = (value:string) => {
             setEmail(value);
-            console.log(email);
     };
     const onChangeInputSenha = (value:string) => {
             setSenha(value);
-            console.log(senha);
+
     };
     const onChangeInputCSenha = (value:string) => {
             setCSenha(value);
-            console.log(cSenha);
-    };
+    }
 
     return (
         <SafeAreaView style={style.container}>
@@ -103,8 +118,8 @@ const Cadastrar = ({navigation}: any) => {
                     <Text style={style.textLink}>Já possu uma conta? clique aqui para logar</Text>
             </TouchableOpacity>
             <View style={style.botao}>
-                <TouchableOpacity  onPress={onPress}>
-                    <Text style={style.textoBotao}>Entre</Text>
+                <TouchableOpacity  onPress={submit}>
+                    <Text style={style.textoBotao}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
             </ScrollView>
