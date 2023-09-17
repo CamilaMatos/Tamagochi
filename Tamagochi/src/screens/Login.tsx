@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Button, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import Header from "../components/Header";
 
 
@@ -47,27 +47,35 @@ const style = StyleSheet.create({
         textAlign: 'center',
         marginTop: 10,
     },
+    textLink: {
+        fontSize: 10,
+        color: '#004cff',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
 });
 
 const Login = ({navigation}: any) => {
-    const [login, setLogin] = useState<string>();
+    const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
-    const onPress = () => {navigation.navigate('Home', {nome:{login}})};
+    const onPress1 = () => {navigation.navigate('Home', {nome:{email}})};
+    const onPress2 = () => {navigation.navigate('Cadastrar')};
 
     const onChangeInput = (value:string) => {
-        setLogin(value);
+        setEmail(value);
     };
 
     return (
         <SafeAreaView style={style.container}>
+            <ScrollView>
             <Header />
-            <Text style={style.texto}>Bem-vindo (a) ao Tamagochi</Text>
-            <Text style={style.titulo}>Chibi Hunter</Text>
+            <Text style={style.texto}>Bem-vindo (a) ao Chibi Hunter</Text>
+            <Text style={style.titulo}>Entre na sua conta!</Text>
             <TextInput 
             style={style.input} 
-            value={login} 
+            value={email} 
             onChangeText={onChangeInput}
-            placeholder="Login"
+            placeholder="E-mail"
             />
             <TextInput 
             style={style.input} 
@@ -75,11 +83,15 @@ const Login = ({navigation}: any) => {
             onChangeText={onChangeInput}
             placeholder="Senha"
             />
+            <TouchableOpacity  onPress={onPress2}>
+                    <Text style={style.textLink}>Ainda não tem uma conta? clique aqui para se cadastrar</Text>
+            </TouchableOpacity>
             <View style={style.botao}>
-                <TouchableOpacity  onPress={onPress}>
+                <TouchableOpacity  onPress={onPress1}>
                     <Text style={style.textoBotao}>Entre</Text>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
