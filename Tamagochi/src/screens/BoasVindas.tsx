@@ -47,7 +47,7 @@ const style = StyleSheet.create({
 
 const BoasVindas = ({navigation}: any) => {
     const onPress1 = () => {navigation.navigate('Login')};
-    const onPress2 = () => {navigation.navigate('Cadastro')};
+    const onPress2 = () => {navigation.navigate('Cadastrar')};
 
     return (
         <SafeAreaView style={style.container}>
