@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
+import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, Alert } from "react-native";
 import Header from "../components/Header";
 import axios from 'axios';
 
 
 const style = StyleSheet.create({
     container: {
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        flex: 1,
     },
     texto: {
         color: '#787a7d',
@@ -38,15 +41,13 @@ const style = StyleSheet.create({
         width: 100,
         height: 50,
         borderRadius: 35,
-        marginTop: 5,
-        marginLeft: 160,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     textoBotao: {
         color: '#ffff',
         fontSize: 15,
         textAlign: 'center',
-        marginTop: 10,
+        paddingTop: 8,
     },
     textLink: {
         fontSize: 10,
@@ -78,9 +79,12 @@ const Login = ({navigation}: any) => {
             console.log(response);
             navigation.navigate('Home', {email:{email}});
         } catch(error) {
-            console.error(error)
-        }
+            Alert.alert('Erro', 'E-mail ou senha inválidos!', [
+                
+                {text: 'OK', onPress: () => console.log("Erro")},]);
+            }
     }
+    
 
     return (
         <SafeAreaView style={style.container}>
@@ -103,14 +107,17 @@ const Login = ({navigation}: any) => {
             <TouchableOpacity  onPress={onPress}>
                     <Text style={style.textLink}>Ainda não tem uma conta? clique aqui para se cadastrar</Text>
             </TouchableOpacity>
+            
+            </ScrollView>
             <View style={style.botao}>
-                <TouchableOpacity  onPress={submit}>
+                <TouchableOpacity onPress={submit}>
                     <Text style={style.textoBotao}>Entre</Text>
                 </TouchableOpacity>
             </View>
-            </ScrollView>
+            
         </SafeAreaView>
+        
     );
-}
+    }
 
 export default Login;

@@ -35,9 +35,11 @@ const style = StyleSheet.create({
         margin: 10,
     },
     container: {
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         backgroundColor: '#fff',
         flex: 1,
-        justifyContent: 'center',
       },
       fixToText: {
         flexDirection: 'row',

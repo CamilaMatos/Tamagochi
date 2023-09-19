@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from 'axios';
 
 
 const style = StyleSheet.create({
     container: {
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        flex: 1,
     },
     texto: {
         color: '#787a7d',
@@ -18,7 +21,7 @@ const style = StyleSheet.create({
     },
     titulo: {
         color: '#0c7a02',
-        fontSize: 45,
+        fontSize: 40,
         textAlign: 'center',
         fontWeight: 'bold',
         marginBottom: 10,
@@ -39,9 +42,7 @@ const style = StyleSheet.create({
         width: 100,
         height: 50,
         borderRadius: 35,
-        marginTop: 5,
-        marginLeft: 160,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     textoBotao: {
         color: '#ffff',
@@ -66,16 +67,28 @@ const Cadastrar = ({navigation}: any) => {
     const onPress = () => {navigation.navigate('Login')};
  
     const submit = async () => {
-        try {
-            const postToSubmit = {
-                email: email,
-                password: senha,
-            };
-            const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', postToSubmit);
-            console.log(response.data);
-            navigation.navigate('Login');
-        } catch(error) {
-            console.error(error)
+        if(email=="") {
+            Alert.alert('Erro', 'O e-mail não pode ficar em branco', [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel',},
+            ]);
+        } else{
+            if(senha==cSenha){
+                try {
+                    const postToSubmit = {
+                        email: email,
+                        password: senha,
+                    };
+                    const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', postToSubmit);
+                    console.log(response.data);
+                    navigation.navigate('Login');
+                } catch(error) {
+                    console.error(error)
+                }
+        } else{
+            Alert.alert('Erro', 'Preencha os campos de senha e confirmação de senha igualmente!', [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'),
+ style: 'cancel',},
+            {text: 'OK', onPress: () => onChangeInputCSenha("")},]);}
         }
     }
 
@@ -117,12 +130,12 @@ const Cadastrar = ({navigation}: any) => {
             <TouchableOpacity  onPress={onPress}>
                     <Text style={style.textLink}>Já possu uma conta? clique aqui para logar</Text>
             </TouchableOpacity>
+            </ScrollView>
             <View style={style.botao}>
                 <TouchableOpacity  onPress={submit}>
                     <Text style={style.textoBotao}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
-            </ScrollView>
         </SafeAreaView>
     );
 }
