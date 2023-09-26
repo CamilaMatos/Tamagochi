@@ -82,7 +82,8 @@ const Cadastrar = ({navigation}: any) => {
                     console.log(response.data);
                     navigation.navigate('Login');
                 } catch(error) {
-                    console.error(error)
+                    Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
+                        {text: 'OK', onPress: () => console.log('Ok')},]);
                 }
         } else{
             Alert.alert('Erro', 'Preencha os campos de senha e confirmação de senha igualmente!', [
