@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import axios from 'axios';
+import axios from '../axios.config';
 
 
 const style = StyleSheet.create({
@@ -78,7 +78,7 @@ const Cadastrar = ({navigation}: any) => {
                         email: email,
                         password: senha,
                     };
-                    const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', postToSubmit);
+                    const response = await axios.post('/register', postToSubmit);
                     console.log(response.data);
                     navigation.navigate('Login');
                 } catch(error) {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
-import Header from "../components/Header";
+import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, Image, ImageBackground, useWindowDimensions } from "react-native";
+
 
 
 const style = StyleSheet.create({
@@ -45,6 +45,10 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
       },
+      imagem: {
+        width: 400,
+        height: 600,
+      },
 });
 
 const BoasVindas = ({navigation}: any) => {
@@ -53,18 +57,18 @@ const BoasVindas = ({navigation}: any) => {
 
     return (
         <SafeAreaView style={style.container}>
-            <View style={style.fixToText}>
-                <Header />
-            </View>
-            <Text style={style.titulo}>Chibi Hunter</Text>
-            <View style={style.fixToText}>
-                <TouchableOpacity style={style.botao} onPress={onPress1}>
-                    <Text style={style.texto}>Entre</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={style.botao} onPress={onPress2}>
-                    <Text style={style.texto}>Cadastre-se</Text>
-                </TouchableOpacity>
-            </View>
+            <ImageBackground source={require('../assets/logo.jpg')} resizeMode="cover" style={style.imagem}>
+                <Text style={style.titulo}>Chibi Hunter</Text>
+                <View style={style.fixToText}>
+                    <TouchableOpacity style={style.botao} onPress={onPress1}>
+                        <Text style={style.texto}>Entre</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={style.botao} onPress={onPress2}>
+                        <Text style={style.texto}>Cadastre-se</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+            
             
         </SafeAreaView>
     );

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, Alert } from "react-native";
 import Header from "../components/Header";
-import axios from 'axios';
+import axios from '../axios.config';
+import user from "../stores/user";
+
+
 
 
 const style = StyleSheet.create({
@@ -69,14 +72,18 @@ const Login = ({navigation}: any) => {
         setSenha(value);
     };
 
+    const store = user();
+    
+
     const submit = async () => {
         try {
             const postToSubmit = {
                 email: email,
                 password: senha,
             };
-            const response = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/login/', postToSubmit);
-            console.log(response);
+            const response = await axios.post('/login', postToSubmit);
+            store.setToken(response.data.token);
+            console.log(response.data.token);
             navigation.navigate('Home', {email:{email}});
         } catch(error) {
             Alert.alert('Erro', 'E-mail ou senha inválidos!', [
@@ -114,6 +121,8 @@ const Login = ({navigation}: any) => {
                     <Text style={style.textoBotao}>Entre</Text>
                 </TouchableOpacity>
             </View>
+
+            
             
         </SafeAreaView>
         
