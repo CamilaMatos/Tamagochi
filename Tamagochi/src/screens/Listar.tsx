@@ -1,15 +1,29 @@
-import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from '../axios.config';
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import PetList from '../components/PetList';
 
 const style = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#fff',
         flex: 1,
+    },
+    quadro: {
+        flexDirection: 'row',
+        height: 150,
+        width: 350,
+        margin: 10,
+        padding: 5,
+        backgroundColor: '#d5dbd6',
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#000',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     texto: {
         color: '#000',
@@ -43,11 +57,13 @@ const style = StyleSheet.create({
         borderColor: "#000",
     },
     botao: {
-        backgroundColor: '#0c7a02',
-        width: 50,
-        height: 25,
-        borderRadius: 15,
-        marginBottom: 2,
+        flexDirection: 'column',
+        backgroundColor: '#ff0000',
+        width: 30,
+        height: 5,
+        borderRadius: 30,
+        marginBottom: 8,
+        marginTop: 8,
         flex: 0.6,
     },
     textoBotao: {
@@ -55,6 +71,7 @@ const style = StyleSheet.create({
         fontSize: 8,
         textAlign: 'center',
         marginTop: 5,
+        fontWeight: 'bold',
     },
     textLink: {
         fontSize: 10,
@@ -75,54 +92,14 @@ const style = StyleSheet.create({
         textAlign: 'center',
         marginTop: 10,
     },
+    imagem: {
+        width: 120,
+        height: 125,
+        borderRadius: 10,
+        marginRight: 15,
+    }
 });
 
-type PetListProps = {
-    list: {
-        id: string,
-        name:string,
-    },
-    getPet: () => void
-}
-
-const PetList = ({list, getPet}: PetListProps) => {
-
-    const handleDelete = () => {
-            Alert.alert('Excluir Pet', 'Tem certeza que quer deletar o pet?', [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel',},
-                {text: 'OK', onPress: submit}
-            ]
-            )
-                
-    }
-
-    const submit = async () => {
-        
-            try {
-                await axios.delete(`/pet/${list.id}`);
-                Alert.alert('Sucesso', 'Pet criado com sucesso!', [
-                {text: 'OK', onPress: getPet},]);
-            } catch(error) {
-                Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
-                    {text: 'OK', onPress: () => console.log(error)},]);
-            }
-        } 
-
-    return (
-        <View style={{flexDirection: 'row', padding: 1,}}>
-            <Text style={{fontWeight: 'bold', color: '#000', flex: 0.4}}>Id:</Text>
-            <Text style={{color: '#000', flex: 0.6}}>{list.id}</Text>
-            <Text style={{color: '#000', flex: 0.6}}> - </Text>
-            <Text style={{fontWeight: 'bold', color: '#000', flex: 0.4}}>Nome:</Text>
-            <Text style={{color: '#000', flex: 0.6}}>{list.name} </Text>
-            <View style={style.botao}>
-            <TouchableOpacity  onPress={handleDelete}>
-                    <Text style={style.textoBotao}>Excluir</Text>
-            </TouchableOpacity>
-            </View>
-        </View>
-    )
-}
 
 const Listar = ({navigation}: any) => {
     const onPress = () => {navigation.navigate('CriarPet')};
@@ -131,8 +108,8 @@ const Listar = ({navigation}: any) => {
 
     const getPet = useCallback(async () => {
         try {
-            const {data} = await axios.get('/pets',);
-            console.log({data})
+            const {data} = await axios.get('/pets');
+            console.log(data.pets);
             setPets(data.pets);
         } catch (error) {
             console.log(error);
