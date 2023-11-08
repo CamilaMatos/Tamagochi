@@ -7,6 +7,8 @@ import BoasVindas from './src/screens/BoasVindas';
 import Cadastrar from './src/screens/Cadastrar';
 import CriarPet from './src/screens/CriarPet';
 import Listar from './src/screens/Listar';
+import Detalhes from './src/screens/Detalhes';
+import Brincar from './src/screens/Brincar';
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
@@ -19,6 +21,8 @@ function App(): JSX.Element {
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="CriarPet" component={CriarPet}/>
         <Stack.Screen name="Listar" component={Listar}/>
+        <Stack.Screen name="Detalhes" component={Detalhes}/>
+        <Stack.Screen name="Brincar" component={Brincar}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
