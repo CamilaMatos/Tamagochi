@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from '../axios.config';
 
 
@@ -62,6 +62,10 @@ const style = StyleSheet.create({
         flexDirection: 'row', 
         
     },
+    imagem: {
+        width: 80,
+        height: 100,
+    }
 });
 
 
@@ -69,6 +73,8 @@ const style = StyleSheet.create({
 const CriarPet = ({navigation}: any) => {
     const onPress = () => {navigation.navigate('Listar')};
     const [name, setName] = useState<string>();
+    
+
  
     const submit = async () => {
         if(name=="") {
@@ -80,7 +86,8 @@ const CriarPet = ({navigation}: any) => {
                 const postToSubmit = {
                     name: name,
                 };
-                await axios.post('/pet', postToSubmit);
+                const resposta = await axios.post('/pet', postToSubmit);
+                console.log(resposta.data.id);
                 Alert.alert('Sucesso', 'Pet criado com sucesso!', [
                     {text: 'OK', onPress: () => console.log('Ok')},]);
             } catch(error) {
@@ -93,6 +100,7 @@ const CriarPet = ({navigation}: any) => {
     const onChangeInputname = (value:string) => {
             setName(value);
     };
+
     
 
     return (

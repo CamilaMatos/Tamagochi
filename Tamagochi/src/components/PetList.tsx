@@ -1,12 +1,15 @@
 import {  Alert,  Image, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from '../axios.config';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EditarPet from './EditarPet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import pet from "../stores/pet";
-
-
+import imagem1 from '../assets/chibs/1.png';
+import imagem2 from '../assets/chibs/2.png';
+import imagem3 from '../assets/chibs/3.png';
+import imagem4 from '../assets/chibs/4.png';
+import imagem5 from '../assets/chibs/5.png';
+import imagem6 from '../assets/chibs/6.png';
 
 const style = StyleSheet.create({
     quadro: {
@@ -122,7 +125,23 @@ type PetListProps = {
     getPet: () => void, 
 }
 
+const SorteiaNumero = () => {
+    return Math.floor(Math.random() * 6) + 1; 
+  };
+
 const PetList = ({list, getPet}: PetListProps) => {
+    const PegaImagem = SorteiaNumero();
+    const imagens = {
+        1: imagem1,
+        2: imagem2,
+        3: imagem3,
+        4: imagem4,
+        5: imagem5,
+        6: imagem6,
+    };
+
+    const imagem = imagens[PegaImagem];
+
 
     const navigation = useNavigation();
     const onPress = () => {navigation.navigate('Detalhes', {id:list.id})};
@@ -140,9 +159,6 @@ const PetList = ({list, getPet}: PetListProps) => {
     const editar = () => {
         setModalVisible(true);
     }
-
-    const {img} = pet.getState();
-    const imagem = '../assets/'+img+'.png';
 
     const submit = async () => {
             try {
@@ -179,10 +195,9 @@ const PetList = ({list, getPet}: PetListProps) => {
                 </Modal>
             </View>
         <View style={style.quadro}>
-            
             <View style={{flex: 0.3}}>
                 <Image 
-                    source={require(imagem)}  
+                    source={imagem}  
                     style={style.imagem}
                 />
             </View>
