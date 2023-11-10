@@ -27,8 +27,8 @@ const style = StyleSheet.create({
         flex: 0.3,
     },
     imagem: {
-        width: 200,
-        height: 240,
+        width: 140,
+        height: 220,
         flex: 0.4,
         marginTop: 35,
     },
@@ -162,7 +162,7 @@ const style = StyleSheet.create({
 });
 
 const Detalhes = ({route, navigation} : any) => {
-    const {id} = route.params;
+    const {id, img} = route.params;
     
     const [name, setName] = useState();//nome
     const [life, setLife] = useState();//vida
@@ -230,9 +230,9 @@ const Detalhes = ({route, navigation} : any) => {
     return(
         <SafeAreaView style={style.container}>
             <View style={style.cabecalho}>
-                <Image style={style.imagem} source={require('../assets/1.png')} />
+                <Image style={style.imagem} source={img} />
                 <View style={style.nome}>
-                    <Text style={style.titulo}>Nome {id}</Text>
+                    <Text style={style.titulo}>{name}</Text>
                     <Text style={style.texto}>D E T A L H E S</Text>
                     <View style={style.opcoes}>
                         <View style={style.botao}>

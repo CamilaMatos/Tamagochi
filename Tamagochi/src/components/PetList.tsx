@@ -144,7 +144,7 @@ const PetList = ({list, getPet}: PetListProps) => {
 
 
     const navigation = useNavigation();
-    const onPress = () => {navigation.navigate('Detalhes', {id:list.id})};
+    const onPress = () => {navigation.navigate('Detalhes', {id:list.id, img:imagem,})};
 
     const handleDelete = () => {
             Alert.alert('Excluir Pet', 'Tem certeza que quer deletar o pet?', [
