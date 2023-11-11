@@ -16,6 +16,7 @@ const style = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         marginBottom: 10,
+        marginTop: 20,
     },
     input: {
         height: 60,
@@ -36,7 +37,7 @@ const style = StyleSheet.create({
     },
     container: {
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#fff',
         flex: 1,
@@ -44,10 +45,11 @@ const style = StyleSheet.create({
       fixToText: {
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: 585,
       },
       imagem: {
         width: 400,
-        height: 600,
+        height: 780,
       },
 });
 
