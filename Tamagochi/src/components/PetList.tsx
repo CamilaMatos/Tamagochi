@@ -147,7 +147,7 @@ const PetList = ({list, getPet}: PetListProps) => {
     const onPress = () => {navigation.navigate('Detalhes', {id:list.id, img:imagem,})};
 
     const handleDelete = () => {
-            Alert.alert('Excluir Pet', 'Tem certeza que quer deletar o pet?', [
+            Alert.alert('Excluir Chibi', `Tem certeza que quer deletar o ${list.name}?`, [
                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel',},
                 {text: 'OK', onPress: submit}
             ]
@@ -163,7 +163,7 @@ const PetList = ({list, getPet}: PetListProps) => {
     const submit = async () => {
             try {
                 await axios.delete(`/pet/${list.id}`);
-                Alert.alert('Sucesso', 'Pet criado com sucesso!', [
+                Alert.alert('Sucesso', 'Chibi excluído!', [
                 {text: 'OK', onPress: getPet},]);
             } catch(error) {
                 Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
