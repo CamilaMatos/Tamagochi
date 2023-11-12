@@ -3,6 +3,7 @@ import { Alert, FlatList, Image, ImageBackground, Modal, Pressable, StyleSheet, 
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from '../axios.config';
 import EditarPet from "../components/EditarPet";
+import user from "../stores/user";
 
 
 const style = StyleSheet.create({
@@ -30,11 +31,12 @@ const style = StyleSheet.create({
         width: 140,
         height: 220,
         flex: 0.4,
-        marginTop: 35,
+        marginTop: -30,
     },
     nome: {
         flex: 0.5,
         flexDirection: 'column',
+        justifyContent: 'flex-start',
     },
     cabecalho: {
         flexDirection: 'row',
@@ -121,6 +123,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 8,
         paddingRight: 8,
+        flex: 0.5,
     },
     centeredView: {
         flex: 0,
@@ -159,18 +162,42 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
       },
+      linhaVoltar: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        width: 350,
+        margin: 10,
+      },
+      voltar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+      },
+      deslogar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+        marginLeft: 280,
+      },
 });
 
 const Detalhes = ({route, navigation} : any) => {
     const {id, img} = route.params;
-    
+    const voltar = () => {navigation.navigate('Listar')};
     const [name, setName] = useState();//nome
     const [life, setLife] = useState();//vida
     const [foodLevel, setFoodLevel] = useState();//nível de comida
     const [funLevel, setFunLevel] = useState();//nível de diversão
     const [restLevel, setRestLevel] = useState();//nível de descanso
 
-    const onPress = () => {navigation.navigate('Brincar', {id: id})};
+    const onPress = () => {navigation.navigate('Brincar', {id: id, nome:name})};
+
+    const novo = () => {navigation.navigate('CriarPet')};
+
+    const logout = () => {
+        user.setState({ token: null });
+        navigation.navigate('Login');
+    };
 
     const getPet = useCallback(async () => {
         try {
@@ -193,28 +220,28 @@ const Detalhes = ({route, navigation} : any) => {
     const submit = async () => {
         try {
             await axios.delete(`/pet/${id}`);
-            Alert.alert('Sucesso', 'Chibi criado com sucesso!', [
-            {text: 'OK', onPress: getPet},]);
+            Alert.alert('Sucesso', `${name} deletado!`, [
+            {text: 'OK', onPress: voltar},]);
         } catch(error) {
             Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
-                {text: 'OK', onPress: () => console.log(error)},]);
+                {text: 'OK', onPress: () => console.log('OK')},]);
         }
     } 
 
     const alimentar = async () => {
         await axios.post('/pet/'+id+'/food');
-            Alert.alert('Sucesso', 'Pet alimentado!', [
+            Alert.alert('Sucesso', `${name} alimentado!`, [
             {text: 'OK', onPress: getPet},]);
     }
 
     const dormir = async () => {
         await axios.post('/pet/'+id+'/rest');
-            Alert.alert('Sucesso', 'Pet dormindo!', [
+            Alert.alert('Sucesso', `${name} descansou!`, [
             {text: 'OK', onPress: getPet},]);
     }
 
     const handleDelete = () => {
-        Alert.alert('Excluir Pet', 'Tem certeza que quer deletar o pet?', [
+        Alert.alert('Excluir Chibi', `Tem certeza que quer deletar o ${name}?`, [
             {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel',},
             {text: 'OK', onPress: submit}
         ]
@@ -229,6 +256,14 @@ const Detalhes = ({route, navigation} : any) => {
 
     return(
         <SafeAreaView style={style.container}>
+            <View style={style.linhaVoltar}>
+                <TouchableOpacity  onPress={voltar}>
+                    <Image source={require('../assets/voltarv.png')} style={style.voltar}/>
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={logout}>
+                    <Image source={require('../assets/deslogar.png')} style={style.deslogar}/>
+                </TouchableOpacity>
+            </View>
             <View style={style.cabecalho}>
                 <Image style={style.imagem} source={img} />
                 <View style={style.nome}>
@@ -246,7 +281,7 @@ const Detalhes = ({route, navigation} : any) => {
                             </TouchableOpacity>
                         </View>
                         <View style={style.botao}>
-                            <TouchableOpacity  onPress={editar}>
+                            <TouchableOpacity  onPress={novo}>
                                 <Image source={require('../assets/icones/4.png')} style={style.iconeOP}/>
                             </TouchableOpacity>
                         </View>

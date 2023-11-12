@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import axios from '../axios.config';
 
 
@@ -56,11 +56,23 @@ const style = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
     },
+    linhaVoltar: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        width: 350,
+        margin: 10,
+      },
+      voltar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+      },
 });
 
 
 
 const Cadastrar = ({navigation}: any) => {
+    const voltar = () => {navigation.navigate('BoasVindas')};
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
     const [cSenha, setCSenha] = useState<string>();
@@ -80,6 +92,7 @@ const Cadastrar = ({navigation}: any) => {
                     };
                     const response = await axios.post('/register', postToSubmit);
                     console.log(response.data);
+                    redefinir();
                     navigation.navigate('Login');
                 } catch(error) {
                     Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
@@ -104,8 +117,17 @@ const Cadastrar = ({navigation}: any) => {
             setCSenha(value);
     }
 
+    const redefinir = () => {
+        setEmail("");
+        setSenha("");
+        setCSenha("");
+    }
+
     return (
         <SafeAreaView style={style.container}>
+            <TouchableOpacity  onPress={voltar} style={style.linhaVoltar}>
+                <Image source={require('../assets/voltarv.png')} style={style.voltar}/>
+            </TouchableOpacity>
             <ScrollView>
             <Header />
             <Text style={style.texto}>Bem-vindo (a) ao Chibi Hunter</Text>
@@ -116,13 +138,15 @@ const Cadastrar = ({navigation}: any) => {
             onChangeText={onChangeInputEmail}
             placeholder="E-mail"
             />
-            <TextInput 
+            <TextInput
+            secureTextEntry={true} 
             style={style.input} 
             value={senha} 
             onChangeText={onChangeInputSenha}
             placeholder="Senha"
             />
-            <TextInput 
+            <TextInput
+            secureTextEntry={true}
             style={style.input} 
             value={cSenha} 
             onChangeText={onChangeInputCSenha}

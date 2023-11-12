@@ -3,6 +3,7 @@ import axios from '../axios.config';
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PetList from '../components/PetList';
+import user from "../stores/user";
 
 const style = StyleSheet.create({
     container: {
@@ -81,10 +82,11 @@ const style = StyleSheet.create({
     },
     botao2: {
         backgroundColor: '#0c7a02',
-        width: 100,
+        width: 120,
         height: 50,
         borderRadius: 35,
         marginBottom: 10,
+        margin: 5,
     },
     textoBotao2: {
         color: '#ffff',
@@ -97,14 +99,40 @@ const style = StyleSheet.create({
         height: 125,
         borderRadius: 10,
         marginRight: 15,
-    }
+    },
+    dois: {
+        flexDirection: 'row', 
+        
+    },
+    linhaVoltar: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        width: 350,
+        margin: 10,
+      },
+      voltar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+      },
+      deslogar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+        marginLeft: 280,
+      },
 });
-
 
 const Listar = ({navigation}: any) => {
     const onPress = () => {navigation.navigate('CriarPet')};
+    const voltar = () => {navigation.navigate('Home')};
 
     const [pets, setPets] = useState();
+
+    const logout = () => {
+        user.setState({ token: null });
+        navigation.navigate('Login');
+    };
 
     const getPet = useCallback(async () => {
         try {
@@ -122,13 +150,21 @@ const Listar = ({navigation}: any) => {
 
     return(
         <SafeAreaView style={style.container}>
-            <Text style={style.texto}>
-                <FlatList data={pets} renderItem={({item}) => <PetList list={item} getPet={getPet}/>} />
-            </Text>
-            <View style={style.botao2}>
-                <TouchableOpacity  onPress={onPress}>
-                    <Text style={style.textoBotao2}>Novo Pet</Text>
+            <View style={style.linhaVoltar}>
+                <TouchableOpacity  onPress={voltar}>
+                    <Image source={require('../assets/voltarv.png')} style={style.voltar}/>
                 </TouchableOpacity>
+                <TouchableOpacity  onPress={logout}>
+                    <Image source={require('../assets/deslogar.png')} style={style.deslogar}/>
+                </TouchableOpacity>
+            </View>
+                <FlatList data={pets} renderItem={({item}) => <PetList list={item} getPet={getPet}/>}/>
+                <View style={style.dois}>
+                    <View style={style.botao2}>
+                        <TouchableOpacity  onPress={onPress}>
+                            <Text style={style.textoBotao2}>Novo Chibi</Text>
+                        </TouchableOpacity>
+                    </View>
             </View>
         </SafeAreaView>
     )

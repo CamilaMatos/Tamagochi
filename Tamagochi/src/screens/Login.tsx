@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, Alert } from "react-native";
+import { TouchableOpacity, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, Alert, Image } from "react-native";
 import Header from "../components/Header";
 import axios from '../axios.config';
 import user from "../stores/user";
@@ -58,12 +58,24 @@ const style = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
     },
+    linhaVoltar: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        width: 350,
+        margin: 10,
+      },
+      voltar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+      },
 });
 
 const Login = ({navigation}: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
     const onPress = () => {navigation.navigate('Cadastrar')};
+    const voltar = () => {navigation.navigate('BoasVindas')};
 
     const onChangeInput = (value:string) => {
         setEmail(value);
@@ -84,17 +96,25 @@ const Login = ({navigation}: any) => {
             const response = await axios.post('/login', postToSubmit);
             store.setToken(response.data.token);
             console.log(response.data.token);
+            redefinir();
             navigation.navigate('Home', {email:{email}});
         } catch(error) {
             Alert.alert('Erro', 'E-mail ou senha inválidos!', [
-                
-                {text: 'OK', onPress: () => console.log("Erro")},]);
+                {text: 'OK', onPress: () => redefinir()
+            },]);
             }
     }
-    
 
+    const redefinir = () => {
+        setEmail("");
+        setSenha("");
+    }
+    
     return (
         <SafeAreaView style={style.container}>
+            <TouchableOpacity  onPress={voltar} style={style.linhaVoltar}>
+                <Image source={require('../assets/voltarv.png')} style={style.voltar}/>
+            </TouchableOpacity>
             <ScrollView>
             <Header />
             <Text style={style.texto}>Bem-vindo (a) ao Chibi Hunter</Text>
@@ -105,7 +125,8 @@ const Login = ({navigation}: any) => {
             onChangeText={onChangeInput}
             placeholder="E-mail"
             />
-            <TextInput 
+            <TextInput
+            secureTextEntry={true}
             style={style.input} 
             value={senha} 
             onChangeText={onChangeInputSenha}
@@ -121,9 +142,6 @@ const Login = ({navigation}: any) => {
                     <Text style={style.textoBotao}>Entre</Text>
                 </TouchableOpacity>
             </View>
-
-            
-            
         </SafeAreaView>
         
     );

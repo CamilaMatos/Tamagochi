@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from '../axios.config';
+import user from "../stores/user";
 
 
 
@@ -65,16 +66,37 @@ const style = StyleSheet.create({
     imagem: {
         width: 80,
         height: 100,
-    }
+    },
+    linhaVoltar: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        width: 350,
+        margin: 10,
+      },
+      voltar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+      },
+      deslogar: {
+        width: 35,
+        height: 35,
+        marginTop: 10,
+        marginLeft: 280,
+      },
 });
 
 
 
 const CriarPet = ({navigation}: any) => {
+    const voltar = () => {navigation.navigate('Home')};
     const onPress = () => {navigation.navigate('Listar')};
     const [name, setName] = useState<string>();
     
-
+    const logout = () => {
+        user.setState({ token: null });
+        navigation.navigate('Login');
+    };
  
     const submit = async () => {
         if(name=="") {
@@ -89,7 +111,7 @@ const CriarPet = ({navigation}: any) => {
                 const resposta = await axios.post('/pet', postToSubmit);
                 console.log(resposta.data.id);
                 Alert.alert('Sucesso', 'Pet criado com sucesso!', [
-                    {text: 'OK', onPress: () => console.log('Ok')},]);
+                    {text: 'OK', onPress: () => setName("")},]);
             } catch(error) {
                 Alert.alert('Erro', 'Informações Inválidas! Tente novamente.', [
                     {text: 'OK', onPress: () => console.log(error)},]);
@@ -105,10 +127,18 @@ const CriarPet = ({navigation}: any) => {
 
     return (
         <SafeAreaView style={style.container}>
+            <View style={style.linhaVoltar}>
+                <TouchableOpacity  onPress={voltar}>
+                    <Image source={require('../assets/voltarv.png')} style={style.voltar}/>
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={logout}>
+                    <Image source={require('../assets/deslogar.png')} style={style.deslogar}/>
+                </TouchableOpacity>
+            </View>
             <ScrollView>
             <Header />
             <Text style={style.texto}>Chibi Hunter</Text>
-            <Text style={style.titulo}>Crie seu Pet!</Text>
+            <Text style={style.titulo}>Crie seu Chibi!</Text>
             <TextInput 
             style={style.input}
             value={name} 
@@ -117,16 +147,16 @@ const CriarPet = ({navigation}: any) => {
             />
             </ScrollView>
             <View style={style.dois}>
-            <View style={style.botao}>
-                <TouchableOpacity  onPress={submit}>
-                    <Text style={style.textoBotao}>Criar</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={style.botao}>
-                <TouchableOpacity  onPress={onPress}>
-                    <Text style={style.textoBotao}>Listar Pets</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={style.botao}>
+                    <TouchableOpacity  onPress={submit}>
+                        <Text style={style.textoBotao}>Criar</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={style.botao}>
+                    <TouchableOpacity  onPress={onPress}>
+                        <Text style={style.textoBotao}>Listar Chibis</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
