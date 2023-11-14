@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PetList from '../components/PetList';
 import user from "../stores/user";
 
+
 const style = StyleSheet.create({
     container: {
         flexDirection: 'column',

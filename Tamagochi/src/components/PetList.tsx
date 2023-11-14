@@ -3,6 +3,8 @@ import axios from '../axios.config';
 import { useState, useEffect } from 'react';
 import EditarPet from './EditarPet';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';//@ts-ignore
 import imagem1 from '../assets/chibs/1.png';//@ts-ignore
 import imagem2 from '../assets/chibs/2.png';//@ts-ignore
@@ -171,6 +173,15 @@ const PetList = ({list, getPet}: PetListProps) => {
             }
         } 
 
+        useFocusEffect(
+            React.useCallback(() => {
+              getPet();
+        
+              return () => {
+              };
+            }, [modalVisible])
+          );
+
     return (
         <SafeAreaView>
             <View style={style.centeredView}>
@@ -207,12 +218,14 @@ const PetList = ({list, getPet}: PetListProps) => {
                     <Text style={style.texto}>{list.name} </Text>
                 </View>
                 <View style={style.linhaInfo}>
-                    <Text style={style.titulo}>Vida:</Text>
-                    <Text style={style.texto}>{list.life} </Text>
+                    <Text style={style.titulo}>Vida:</Text> 
+                    {/* @ts-ignore */}
+                    <Text style={style.texto}>{Math.round(list.life)} </Text>
                 </View>
                 <View style={style.linhaInfo}>
                     <Text style={style.titulo}>Comida:</Text>
-                    <Text style={style.texto}>{list.foodLevel} </Text>
+                    {/* @ts-ignore */}
+                    <Text style={style.texto}>{Math.round(list.foodLevel)} </Text>
                 </View>
             </View>
             <View style={style.opcoes}>

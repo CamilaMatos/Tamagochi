@@ -4,6 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import axios from '../axios.config';
 import EditarPet from "../components/EditarPet";
 import user from "../stores/user";
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
 
 
 const style = StyleSheet.create({
@@ -254,6 +256,18 @@ const Detalhes = ({route, navigation} : any) => {
         setModalVisible(true);
     }
 
+    useFocusEffect(
+        React.useCallback(() => {
+          // Lógica que você deseja executar quando o componente está focado
+          // Exemplo: chamar getPet() quando o componente está focado
+          getPet();
+    
+          return () => {
+            // Lógica de limpeza, se necessário
+          };
+        }, [modalVisible])
+      );
+
     return(
         <SafeAreaView style={style.container}>
             <View style={style.linhaVoltar}>
@@ -292,24 +306,28 @@ const Detalhes = ({route, navigation} : any) => {
                 <View style={style.linha}>
                     <View style={style.nivel}>
                         <ImageBackground source={require('../assets/detalhes/life.png')} resizeMode="cover" style={style.icone}>
-                        <Text style={style.textoInfo}>{life}</Text>
+                            {/* @ts-ignore */}
+                        <Text style={style.textoInfo}>{Math.round(life)}</Text>
                         <Text style={style.tituloInfo}>V I D A</Text></ImageBackground>
                     </View>
                     <View style={style.nivel}>
                         <ImageBackground source={require('../assets/detalhes/foodLevel.png')} resizeMode="cover" style={style.icone}>
-                        <Text style={style.textoInfo}>{foodLevel}</Text>
+                            {/* @ts-ignore */}
+                        <Text style={style.textoInfo}>{Math.round(foodLevel)}</Text>
                         <Text style={style.tituloInfo}>C O M I D A</Text></ImageBackground>
                     </View>
                 </View>
                 <View style={style.linha}>
                     <View style={style.nivel}>
                         <ImageBackground source={require('../assets/detalhes/funLevel.png')} resizeMode="cover" style={style.icone}>
-                        <Text style={style.textoInfo}>{funLevel}</Text>
+                            {/* @ts-ignore */}
+                        <Text style={style.textoInfo}>{Math.round(funLevel)}</Text>
                         <Text style={style.tituloInfo}>D I V E R S Ã O</Text></ImageBackground>
                     </View>
                     <View style={style.nivel}>
                         <ImageBackground source={require('../assets/detalhes/restLevel.png')} resizeMode="cover" style={style.icone}>
-                        <Text style={style.textoInfo}>{restLevel}</Text>
+                            {/* @ts-ignore */}
+                        <Text style={style.textoInfo}>{Math.round(restLevel)}</Text>
                         <Text style={style.tituloInfo}>D E S C A N S O</Text></ImageBackground>
                     </View>
                 </View>

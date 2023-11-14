@@ -65,8 +65,6 @@ const EditarPet = ({nome, id}: EditarPetProps, {navigation}: any) => {
         setName(value);
 };
 
-    const onPress = () => {navigation.navigate('Listar')};
-
     const submit = async () => {
         if(name=="") {
             Alert.alert('Erro', 'O nome não pode ficar em branco', [
