@@ -1,9 +1,9 @@
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from '../axios.config';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import imagem1 from '../assets/brincar/pedra.png';
-import imagem2 from '../assets/brincar/papel.png';
-import imagem3 from '../assets/brincar/tesoura.png';
+import { SafeAreaView } from 'react-native-safe-area-context';//@ts-ignore
+import imagem1 from '../assets/brincar/pedra.png';//@ts-ignore
+import imagem2 from '../assets/brincar/papel.png';//@ts-ignore
+import imagem3 from '../assets/brincar/tesoura.png';//@ts-ignore
 import imagem4 from '../assets/brincar/verso.png';
 import { useEffect, useState } from 'react';
 
@@ -180,7 +180,7 @@ const Brincar = ({route, navigation} : any) => {
         brincando();
     }
 
-    const alertar = () => {
+    const alertar = () => {//@ts-ignore
         Alert.alert(resultUser, nome+' se divertiu muito com você', [
             {text: 'Voltar', onPress: () => navigation.goBack(), style: 'cancel',},
             {text: 'Jogar novamente!', onPress: () => reverse()},]);

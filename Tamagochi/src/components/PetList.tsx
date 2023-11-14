@@ -3,13 +3,13 @@ import axios from '../axios.config';
 import { useState, useEffect } from 'react';
 import EditarPet from './EditarPet';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-import imagem1 from '../assets/chibs/1.png';
-import imagem2 from '../assets/chibs/2.png';
-import imagem3 from '../assets/chibs/3.png';
-import imagem4 from '../assets/chibs/4.png';
-import imagem5 from '../assets/chibs/5.png';
-import imagem6 from '../assets/chibs/6.png';
+import { useNavigation } from '@react-navigation/native';//@ts-ignore
+import imagem1 from '../assets/chibs/1.png';//@ts-ignore
+import imagem2 from '../assets/chibs/2.png';//@ts-ignore
+import imagem3 from '../assets/chibs/3.png';//@ts-ignore
+import imagem4 from '../assets/chibs/4.png';//@ts-ignore
+import imagem5 from '../assets/chibs/5.png';//@ts-ignore
+import imagem6 from '../assets/chibs/6.png';//@ts-ignore
 
 const style = StyleSheet.create({
     quadro: {
@@ -139,11 +139,11 @@ const PetList = ({list, getPet}: PetListProps) => {
         5: imagem5,
         6: imagem6,
     };
-
+    //@ts-ignore
     const imagem = imagens[PegaImagem];
 
 
-    const navigation = useNavigation();
+    const navigation = useNavigation();//@ts-ignore
     const onPress = () => {navigation.navigate('Detalhes', {id:list.id, img:imagem,})};
 
     const handleDelete = () => {
